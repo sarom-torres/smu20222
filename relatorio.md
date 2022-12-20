@@ -1,4 +1,7 @@
-> Sarom Torres Gaier
+# Relatório da análise da aplicação 
+
+Aluna: Sarom Torres Gaier
+----------------------------------------
 
 # Início do Jogo
 
