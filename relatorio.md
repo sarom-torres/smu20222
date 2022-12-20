@@ -43,7 +43,9 @@ Exemplo de resposta para entrada do segundo jogador
 
 Ao iniciar a sessão de mídia (explicada na seção de Negociação de mídia) é enviado o atributo `a=ice-options:trickle` na qual permite o  o processo de continuar a enviar candidatos depois que a oferta ou resposta inicial já foi enviada para o outro par.
 
-Sendo assim, são enviadas ao servidor mensagens de requisção do tipo `candidate` informando um `usernameFragment` e informações do protoloo UDP, bem como um endereço IPv4
+Sendo assim, são enviadas ao servidor mensagens de requisção do tipo `candidate` informando um `usernameFragment` e informações do protoloco UDP, bem como um endereço IPv4.
+
+> As mensagens candidate são mensagens de dialogo, por compõe uma sequência de trasações.
 
 ![image](https://user-images.githubusercontent.com/34520860/208688760-36506382-1498-46e9-ab29-5a17888209de.png)
 
@@ -62,6 +64,8 @@ Que por sua vez recebe a seguinte resposta:
 
 
 # Negociação de mídia
+
+> A negociação de mídia é realizada por meio de mensagens _offer_ e _answer_. Esse processo de troca de mensagens válidas entre os pontos é conhecida como transação. Alé disso também são consideradas mensagens de diálogo.
 
 ## Requisição 
 
@@ -208,5 +212,8 @@ a=ice-pwd:1fa6da0ff94f4be50b9b539628260837
 a=ice-ufrag:2800cd3f
 [...]
 ```
+
+Alé disso todas as mensagens que realizam transporte de ídia e sinalização utilizam o protocolo SRTP, aa qual é uma extensão do protocolo RTP que conta com medidas de segurança otimizadas, tais como criptografia, autenticação e integridade de mensagens, isto é utiliza HTTPS.
+No Stun é possível fazer a criptografia, entretanto a aplicação não conta com essa funcionalidade.  
 
 Referência: [rfc8839](https://datatracker.ietf.org/doc/rfc8839/)
