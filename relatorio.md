@@ -38,6 +38,8 @@ Exemplo de resposta para entrada do segundo jogador
 
 # Negociação de mídia
 
+## Requisição 
+
 A negociação de mídia se dá pelo protocolo SDP sendo que a oferta é feita por meio de uma requisição ao servidor enviando o campo `offer` e na sequência as informações referentes a descrição da oferta de mída.
 
 ![image](https://user-images.githubusercontent.com/34520860/208670160-d781a701-5eec-4a71-99d4-69d7ed10c5eb.png)
@@ -84,6 +86,44 @@ Algumas observações sobre o campo SDP da requisição de oferta:
 - o campo `m` contém a descrição de mídia e de transporte e consiste em `m=<media> <port> <transport> <fmt list>`
 - por exemplo, o campo `m` requisita uma mídia do tipo audio na porta 9 utilizando os protocolos UDP/TLS/RTP/SAVPF
 - o campo `c` define que o protocolo de transporte deve operar em cima de IP$
-- o campo `a=sendrecv` especifica que as ferramentas devem ser iniciadas em _send e receive mode_. Isso é necessário para conferências que são interativas.
+- o campo `a=sendrecv` especifica que as ferramentas devem ser iniciadas em _send e receive mode_, isto é, operar em modo bidirecional. Isso é necessário para conferências que são interativas.
+
+## Resposta 
+
+A resposta à requisição de oferta se dá por meio do campo `answer`:
+
+![image](https://user-images.githubusercontent.com/34520860/208677991-a6590c93-32fb-464b-93eb-85c81d0251ef.png)
+
+```
+v=0
+o=mozilla...THIS_IS_SDPARTA-99.0 3681336890811055910 0 IN IP4 0.0.0.0
+s=-
+t=0 0
+a=sendrecv
+a=fingerprint:sha-256 40:F2:48:87:EA:22:2D:25:AC:08:C4:7C:AA:1A:68:7C:01:B0:26:D8:E1:31:39:47:13:0B:B9:E8:A8:1F:06:88
+a=group:BUNDLE 0
+a=ice-options:trickle
+a=msid-semantic:WMS *
+m=audio 9 UDP/TLS/RTP/SAVPF 109 9 0 8 101
+c=IN IP4 0.0.0.0
+a=sendrecv
+a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level
+a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:mid
+a=fmtp:109 maxplaybackrate=48000;stereo=1;useinbandfe
+c=1
+a=fmtp:101 0-15
+a=ice-pwd:1fa6da0ff94f4be50b9b539628260837
+a=ice-ufrag:2800cd3f
+a=mid:0
+a=msid:{4fcbde31-d958-4671-99a3-988f1211d1f3} {29dceee2-9e61-403d-85ea-184f2fa77d4a}
+a=rtcp-mux
+a=rtpmap:109 opus/48000/2
+a=rtpmap:9 G722/8000/1
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:101 telephone-event/8000
+a=setup:active
+a=ssrc:1548576031 cname:{abe09305-8ed2-49f4-b949-02800ac4a786}
+```
 
 Referência: [rfc2327](https://www.ietf.org/rfc/rfc2327.txt)
