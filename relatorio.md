@@ -87,6 +87,11 @@ Algumas observações sobre o campo SDP da requisição de oferta:
 - por exemplo, o campo `m` requisita uma mídia do tipo audio na porta 9 utilizando os protocolos UDP/TLS/RTP/SAVPF
 - o campo `c` define que o protocolo de transporte deve operar em cima de IP$
 - o campo `a=sendrecv` especifica que as ferramentas devem ser iniciadas em _send e receive mode_, isto é, operar em modo bidirecional. Isso é necessário para conferências que são interativas.
+- os seguintes campos contém os _codecs_ que são suportados:
+  - `a=rtpmap:109 opus/48000/2`
+  - `a=rtpmap:9 G722/8000/1`
+  - `a=rtpmap:0 PCMU/8000`
+  - `a=rtpmap:8 PCMA/8000`
 
 ## Resposta 
 
