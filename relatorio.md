@@ -81,4 +81,9 @@ Algumas observações sobre o campo SDP da requisição de oferta:
 - consiste em uma requisição de mídia realizada pelo agente `523876576585789748` descrita no campo `o`.
 - o campo `a` define as extensões que serão usadas nos cabeçalhos RTP para que o receptor possa decodificá-lo corretamente e extrair os metadados. 
 - por exemplo, a URI indicada no campo `a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level` está sinalizando que serão incluídas informações sobre o nível de áudio no cabeçalho RTP.
+- o campo `m` contém a descrição de mídia e de transporte e consiste em `m=<media> <port> <transport> <fmt list>`
+- por exemplo, o campo `m` requisita uma mídia do tipo audio na porta 9 utilizando os protocolos UDP/TLS/RTP/SAVPF
+- o campo `c` define que o protocolo de transporte deve operar em cima de IP$
+- o campo `a=sendrecv` especifica que as ferramentas devem ser iniciadas em _send e receive mode_. Isso é necessário para conferências que são interativas.
 
+Referência: [rfc2327](https://www.ietf.org/rfc/rfc2327.txt)
