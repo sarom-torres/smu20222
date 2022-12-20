@@ -8,37 +8,59 @@ Ao entrar no jogo, clicando na tela inicial, é realizada uma requisição HTTP 
 
 # Sinalização
     
-## Requisições: 
+Ao clicar na tela principal da aplicação para entrar na sala, uma mensagem requisição contendo o código da sala escolhida e a mensagem contendo uma solicitação de entrada na sala é enviadas ao servidor, na qual responde com o o identificador único do(s) jogador(es).
 
-Ao clicar para entrar na sala é criado um identificador único `sid` para o jogador:
+## Mensagens 
+
+### Requisição de entrada na sala
+
+A mensagem de requisição de entrada na sala consiste na tag `entrar-na-sala` e no código da sala escolhida pelo jogador
+
+Exemplo de requisição para entrada na sala 0: 
+
+![image](https://user-images.githubusercontent.com/34520860/208665447-3f6bd9da-283d-4d35-8bf1-14e74d76a1b0.png)
+
+Exemplo de requisição para entrada na sala 1: 
+
+![image](https://user-images.githubusercontent.com/34520860/208665345-b851afe7-bbc4-46e0-b376-dbd80cc3a2f3.png)
+
+### Resposta de entrada na sala
+
+A reposta contém a tag `jogadores` e uma lista com seus identificadores únicos, sendo que cada jogador é mapeado com os campos `primeiro` e `segundo`
+
+Exemplo de resposta para entrada do primeiro jogador 
+
+![image](https://user-images.githubusercontent.com/34520860/208667029-c26ad52a-bdc6-4e75-8099-5cabd81a4e19.png)
+
+Exemplo de resposta para entrada do segundo jogador 
+
+![image](https://user-images.githubusercontent.com/34520860/208667326-43364e48-b78f-490b-af98-b943f20ca3a8.png)
+
+# Negociação de mídia
+
+![image](https://user-images.githubusercontent.com/34520860/208670160-d781a701-5eec-4a71-99d4-69d7ed10c5eb.png)
+
 ```
-0{
-   "sid":"ij7ck7YYt3HCu78NAAAA",
-   "upgrades":[
-      "websocket"
-   ],
-   "pingInterval":25000,
-   "pingTimeout":20000,
-   "maxPayload":1000000
-}
+v=0
+o=mozilla...THIS_IS_SDPARTA-99.0 523876576585789748 0 IN IP4 0.0.0.0
+s=-
+t=0 0
+a=sendrecv
+a=fingerprint:sha-256 6C:C0:1F:E7:F4:01:F7:BE:23:A9:ED:D4:97:35:23:F9:A6:F9:A5:41:72:A6:5D:C5:BF:1B:35:0C:E5:8C:3B:FF
+a=group:BUNDLE 0a=ice-options:tricklea=msid-semantic:WMS *m=audio 9 UDP/TLS/RTP/SAVPF 109 9 0 8 101c=IN IP4 0.0.0.0
+a=sendrecv
+a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level
+a=extmap:2/recvonly urn:ietf:params:rtp-hdrext:csrc-audio-level
+a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:mid
+a=fmtp:109 maxplaybackrate=48000;stereo=1;useinbandfec=1
+a=fmtp:101 0-15
+a=ice-pwd:7b0c5c8f47b45fa12f841a15046a3e6ba=ice-ufrag:9be81d48
+a=mid:0
+a=msid:{6b655972-c81e-4cf3-ad7d-7906a52332ba} {99f99761-6097-4b7a-92eb-ca9992212699}
+a=rtcp-muxa=rtpmap:109 opus/48000/2
+a=rtpmap:9 G722/8000/1
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:101 telephone-event/8000
+a=setup:actpassa=ssrc:1968612793 cname:{bb877c81-52fd-46c9-85dd-0a2b3ef7a425}
 ```
-Ao clicar para entrar na sala é enviada a sinalização `40` e obtém como resposta o `sid` do usuário:
-
-```
-40{"sid":"rv-FnGzL9LGkVrweAAAH"}
-```
-
-
-## Respostas: 
-
-nomes/números e formatos das respostas.
-    
-## Mensagens: 
-formato completo de cada mensagem, seja essa requisição ou resposta.
-    
-## Transações: 
-sequência válida de mensagens a formar um transação entre duas entidades em rede, com destaque a informações de controle (identificador, número de sequência etc.).
-    
-## Diálogos: sequência válida de transações a formar um diálogo entre duas entidades em rede, com destaque a informações de controle do diálogo (identificador etc.).
-
-Para cada componente acima, apresentar um exemplo prático do cenário analisado.
