@@ -38,7 +38,11 @@ Exemplo de resposta para entrada do segundo jogador
 
 # Negociação de mídia
 
+A negociação de mídia se dá pelo protocolo SDP sendo que a oferta é feita por meio de uma requisição ao servidor enviando o campo `offer` e na sequência as informações referentes a descrição da oferta de mída.
+
 ![image](https://user-images.githubusercontent.com/34520860/208670160-d781a701-5eec-4a71-99d4-69d7ed10c5eb.png)
+
+Campo SDP detalhado:
 
 ```
 v=0
@@ -47,20 +51,34 @@ s=-
 t=0 0
 a=sendrecv
 a=fingerprint:sha-256 6C:C0:1F:E7:F4:01:F7:BE:23:A9:ED:D4:97:35:23:F9:A6:F9:A5:41:72:A6:5D:C5:BF:1B:35:0C:E5:8C:3B:FF
-a=group:BUNDLE 0a=ice-options:tricklea=msid-semantic:WMS *m=audio 9 UDP/TLS/RTP/SAVPF 109 9 0 8 101c=IN IP4 0.0.0.0
+a=group:BUNDLE 0
+a=ice-options:trickle
+a=msid-semantic:WMS *
+m=audio 9 UDP/TLS/RTP/SAVPF 109 9 0 8 101
+c=IN IP4 0.0.0.0
 a=sendrecv
 a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level
 a=extmap:2/recvonly urn:ietf:params:rtp-hdrext:csrc-audio-level
 a=extmap:3 urn:ietf:params:rtp-hdrext:sdes:mid
 a=fmtp:109 maxplaybackrate=48000;stereo=1;useinbandfec=1
 a=fmtp:101 0-15
-a=ice-pwd:7b0c5c8f47b45fa12f841a15046a3e6ba=ice-ufrag:9be81d48
+a=ice-pwd:7b0c5c8f47b45fa12f841a15046a3e6b
+a=ice-ufrag:9be81d48
 a=mid:0
 a=msid:{6b655972-c81e-4cf3-ad7d-7906a52332ba} {99f99761-6097-4b7a-92eb-ca9992212699}
-a=rtcp-muxa=rtpmap:109 opus/48000/2
+a=rtcp-mux
+a=rtpmap:109 opus/48000/2
 a=rtpmap:9 G722/8000/1
 a=rtpmap:0 PCMU/8000
 a=rtpmap:8 PCMA/8000
 a=rtpmap:101 telephone-event/8000
-a=setup:actpassa=ssrc:1968612793 cname:{bb877c81-52fd-46c9-85dd-0a2b3ef7a425}
+a=setup:actpass
+a=ssrc:1968612793 cname:{bb877c81-52fd-46c9-85dd-0a2b3ef7a425}
 ```
+
+Algumas observações sobre o campo SDP da requisição de oferta:
+
+- consiste em uma requisição de mídia realizada pelo agente `523876576585789748` descrita no campo `o`.
+- o campo `a` define as extensões que serão usadas nos cabeçalhos RTP para que o receptor possa decodificá-lo corretamente e extrair os metadados. 
+- por exemplo, a URI indicada no campo `a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level` está sinalizando que serão incluídas informações sobre o nível de áudio no cabeçalho RTP.
+
