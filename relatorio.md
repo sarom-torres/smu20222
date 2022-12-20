@@ -85,13 +85,15 @@ Algumas observações sobre o campo SDP da requisição de oferta:
 - por exemplo, a URI indicada no campo `a=extmap:1 urn:ietf:params:rtp-hdrext:ssrc-audio-level` está sinalizando que serão incluídas informações sobre o nível de áudio no cabeçalho RTP.
 - o campo `m` contém a descrição de mídia e de transporte e consiste em `m=<media> <port> <transport> <fmt list>`
 - por exemplo, o campo `m` requisita uma mídia do tipo audio na porta 9 utilizando os protocolos UDP/TLS/RTP/SAVPF
-- o campo `c` define que o protocolo de transporte deve operar em cima de IP$
+- o campo `c` define que o protocolo de transporte deve operar em cima de IP4
 - o campo `a=sendrecv` especifica que as ferramentas devem ser iniciadas em _send e receive mode_, isto é, operar em modo bidirecional. Isso é necessário para conferências que são interativas.
 - os seguintes campos contém os _codecs_ que são suportados:
+  - `a=rtcp-mux` 
   - `a=rtpmap:109 opus/48000/2`
   - `a=rtpmap:9 G722/8000/1`
   - `a=rtpmap:0 PCMU/8000`
   - `a=rtpmap:8 PCMA/8000`
+  - `a=rtpmap:101 telephone-event/8000`
 
 ## Resposta 
 
@@ -99,6 +101,8 @@ A resposta à requisição de oferta se dá por meio do campo `answer`:
 
 ![image](https://user-images.githubusercontent.com/34520860/208677991-a6590c93-32fb-464b-93eb-85c81d0251ef.png)
 
+
+A resposta SDP é enviada pelo agente `3681336890811055910` e confirma os protocolos de transpor, os tipos de mídia, bem como os codecs que serão utlizados
 ```
 v=0
 o=mozilla...THIS_IS_SDPARTA-99.0 3681336890811055910 0 IN IP4 0.0.0.0
@@ -132,3 +136,27 @@ a=ssrc:1548576031 cname:{abe09305-8ed2-49f4-b949-02800ac4a786}
 ```
 
 Referência: [rfc2327](https://www.ietf.org/rfc/rfc2327.txt)
+
+## Codecs
+
+Como já mencionado, os codecs acordados na negociação de mídia SDP foram:
+
+```
+[...]
+m=audio 9 UDP/TLS/RTP/SAVPF 109 9 0 8 101
+[...]
+a=rtpmap:109 opus/48000/2
+a=rtpmap:9 G722/8000/1
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000
+a=rtpmap:101 telephone-event/8000
+```
+
+Em que cada um dos itens referênciados na descrição de mídia consiste em um item do mapeamento RTP.
+
+O formato de cada um desses atributos é:
+
+```
+a=rtpmap:<payload type> <encoding name>/<clock rate> [/<encoding parameters>]
+```
+Exemplo, em `a=rtpmap:9 G722/8000/1` o SDP está sinalizando que o cliente suporta G722, na qual provê audio em alta qualidade HD, a uma taxa de 8kHz.
