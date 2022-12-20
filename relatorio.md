@@ -36,6 +36,28 @@ Exemplo de resposta para entrada do segundo jogador
 
 ![image](https://user-images.githubusercontent.com/34520860/208667326-43364e48-b78f-490b-af98-b943f20ca3a8.png)
 
+### Requisição Candidate
+
+Ao iniciar a sessão de mídia (explicada na seção de Negociação de mídia) é enviado o atributo `a=ice-options:trickle` na qual permite o  o processo de continuar a enviar candidatos depois que a oferta ou resposta inicial já foi enviada para o outro par.
+
+Sendo assim, são enviadas ao servidor mensagens de requisção do tipo `candidate` informando um `usernameFragment` e informações do protoloo UDP, bem como um endereço IPv4
+
+![image](https://user-images.githubusercontent.com/34520860/208688760-36506382-1498-46e9-ab29-5a17888209de.png)
+
+### Resposta Candidate
+
+Que por sua vez recebe a seguinte resposta:
+
+![image](https://user-images.githubusercontent.com/34520860/208693339-45e8c986-067d-4417-a55a-34d7e0d6af90.png)
+
+
+### Mensagem estadoDoJogador
+
+É enviado ao servidor a mensagem com o `estadoDoJogador` indicando a posição e o quadro do jogador do jogador.
+
+![image](https://user-images.githubusercontent.com/34520860/208694441-7b57215a-84c2-4add-81a3-a15f80f019aa.png)
+
+
 # Negociação de mídia
 
 ## Requisição 
@@ -160,3 +182,28 @@ O formato de cada um desses atributos é:
 a=rtpmap:<payload type> <encoding name>/<clock rate> [/<encoding parameters>]
 ```
 Exemplo, em `a=rtpmap:9 G722/8000/1` o SDP está sinalizando que o cliente suporta G722, na qual provê audio em alta qualidade HD, a uma taxa de 8kHz.
+
+
+# Segurança
+
+## Username and Password
+
+O ICE username é representado no atributo SDP "ice-ufrag" enquanto a senha é representada no atributo "ice-pwd":
+
+Mensagem SDP de requisição do agente `523876576585789748`:
+```
+[...]
+a=ice-pwd:7b0c5c8f47b45fa12f841a15046a3e6b
+a=ice-ufrag:9be81d48
+[...]
+```
+
+Mensagem SDP de resposta do agente `3681336890811055910`:
+```
+[...]
+a=ice-pwd:1fa6da0ff94f4be50b9b539628260837
+a=ice-ufrag:2800cd3f
+[...]
+```
+
+Referência: [rfc8839](https://datatracker.ietf.org/doc/rfc8839/)
